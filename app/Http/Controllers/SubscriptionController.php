@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
+use Log;
+use Cookie;
 
 class SubscriptionController extends Controller
 {
@@ -23,14 +26,15 @@ class SubscriptionController extends Controller
      * @param Request $request
      * @return void
      */
-    public function selectPlan(Request $request){
+    public function select(Request $request){
 
         // TODO: バリデーションを実装する
 
         // 未ログインの場合は一旦Cokkieに保存する
         if (Auth::check() === false) {
-            Cookie::queue(Cookie::make('selectPlan', $request->plan, 30));
+            Cookie::queue(Cookie::make('selectPlan', $request->plan, 10000));
             Log::info('未ログインでサブスクリプションプランを選択したため一旦Cokkieに保存する selectPlan="' . print_r($request->plan, true) . '"');                    
+            return redirect('/register');
         }
         else{
             // ログイン中の場合は無視する
@@ -47,8 +51,11 @@ class SubscriptionController extends Controller
     public function create(Request $request)
     {
 
+        Log::info('SubsriptionController.createがコールされた');                    
+
         // 未ログインの場合は課金開始しない
         if (Auth::check() === false) {
+            Log::error('未ログインだから課金しない');                    
             return false;
         }
 
@@ -59,20 +66,22 @@ class SubscriptionController extends Controller
         $selectPlanCookie = (int)(Cookie::get('selectPlan'));
         $selectPlan = [];
 
-        if($selectPlan === 1000){
+        if($selectPlanCookie === 1000){
             $selectPlan['name'] = '1000';
             $selectPlan['plan'] = 'plan_FcTvnzhh0xY6Yd';
         }
-        else if($selectPlan === 3000){
+        else if($selectPlanCookie === 3000){
             $selectPlan['name'] = '3000';
             $selectPlan['plan'] = 'plan_FckP9bTBJEccw2';
         }
-        else if($selectPlan === 5000){
+        else if($selectPlanCookie === 5000){
             $selectPlan['name'] = '5000';
             $selectPlan['plan'] = 'prod_FcTuCIhPye6QGE';
         }
         else{
             // Cokkieの値が無効値だった場合はサブスクリプションを開始しない
+            Log::error('Cokkieの値が無効値だった場合はサブスクリプションを開始しない'); 
+            Log::error('Cokkieの値が無効値だった場合はサブスクリプションを開始しない selectPlanCookie="' . print_r($selectPlanCookie, true) . '"');                    
             return view('home');
         }
 
@@ -84,7 +93,12 @@ class SubscriptionController extends Controller
             return;
         }
         
-        //TODO:ユーザー情報を更新する        
+        // ユーザー情報を更新する
+        $user->plan = (int)$selectPlan['name'];
+        $user->status = true;
+        $user->update();
+
+        Log::info('サブスクリプション課金を開始する user_id="' . print_r($user->id, true) . '"');                    
 
         return view('home');
     }

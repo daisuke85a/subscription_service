@@ -12,8 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
+    // SubscriptionPlanの実装確認のため仮実装する
+    return view('select');
 });
+
+// TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
+// SubscriptionPlanの実装確認のため仮実装する
+Route::get('/select', function () {
+    return view('select');
+});
+Route::post('/select', 'SubscriptionController@select');
 
 Auth::routes();
 
