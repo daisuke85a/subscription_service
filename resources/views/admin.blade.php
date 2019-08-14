@@ -20,7 +20,7 @@
                             </tr>           
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
+                            <!-- @foreach ($users as $user)
                             <tr>
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
@@ -29,7 +29,7 @@
                             <td>{{ $user->created_at }}</td>
                             <td>{{ $user->updated_at }}</td>
                             </tr>
-                            @endforeach
+                            @endforeach -->
                         </tbody>
                     </table>
                 </div>
