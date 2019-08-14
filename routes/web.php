@@ -22,14 +22,18 @@ Route::get('/', function () {
 Route::get('/select', function () {
     return view('select');
 });
+
+//サブスクリプションプランの選択がされたら呼ばれる
 Route::post('/select', 'SubscriptionController@select');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Stripeのクレジットカード情報の検証が完了したら呼ばれる
 Route::post('/stripe', 'SubscriptionController@create');
 
+// クレジットカード情報の入力画面を表示する
 Route::get('/credit', function () {
     return view('credit');
 });
