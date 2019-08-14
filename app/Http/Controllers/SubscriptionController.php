@@ -30,7 +30,6 @@ class SubscriptionController extends Controller
         // Stripe::setApiKey();
 
         $sub = $user->newSubscription('main', 'plan_FcTvnzhh0xY6Yd')->create($request->stripeToken);
-        var_dump($sub);
-        return view('charge');
+        return view('home');
     }
 }

@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/stripe', 'SubscriptionController@create');
+
+Route::get('/credit', function () {
+    return view('credit');
+});
