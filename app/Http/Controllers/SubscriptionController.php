@@ -76,11 +76,10 @@ class SubscriptionController extends Controller
         }
         else if($selectPlanCookie === 5000){
             $selectPlan['name'] = '5000';
-            $selectPlan['plan'] = 'prod_FcTuCIhPye6QGE';
+            $selectPlan['plan'] = 'plan_FckQgGfrqyKrFb';
         }
         else{
             // Cokkieの値が無効値だった場合はサブスクリプションを開始しない
-            Log::error('Cokkieの値が無効値だった場合はサブスクリプションを開始しない'); 
             Log::error('Cokkieの値が無効値だった場合はサブスクリプションを開始しない selectPlanCookie="' . print_r($selectPlanCookie, true) . '"');                    
             return view('home');
         }
@@ -98,7 +97,7 @@ class SubscriptionController extends Controller
         $user->status = true;
         $user->update();
 
-        Log::info('サブスクリプション課金を開始する user_id="' . print_r($user->id, true) . '"');                    
+        Log::info('サブスクリプション課金を開始する user_id="' . print_r($user->id, true) . '" 課金プラン="' . print_r($user->plan, true) . '" ');                    
 
         return view('home');
     }

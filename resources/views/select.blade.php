@@ -35,6 +35,7 @@
                 <div class="card-body">
                     <p>¥5,000</p>
                     <form action="/select" method="POST">
+                        {{ csrf_field()}}
                         <input type="hidden" id="plan" name="plan" value="5000">
                         <input type="submit" value="Get Start!" class="btn btn-outline-primary">
                     </form>
