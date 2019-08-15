@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">管理画面</div>
 
@@ -20,16 +20,16 @@
                             </tr>           
                         </thead>
                         <tbody>
-                            <!-- @foreach ($users as $user)
+                        @foreach ($users as $user)
                             <tr>
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $user->plan }}</td>
+                            <td>{{ $user->status }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td>{{ $user->updated_at }}</td>
                             </tr>
-                            @endforeach -->
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

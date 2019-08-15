@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,4 +27,24 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * Show the admin screen.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show_admin_screen()
+    {
+        // ログイン中のユーザーを確認
+        $user = Auth::user();
+
+        // 管理者の場合のみ、管理画面に遷移できる
+        if ($user->id === 1) {
+            $users = User::all();
+            return view('admin')->with('users', $users);
+        } else {
+            return redirect('/');
+        }
+    }
+
 }
