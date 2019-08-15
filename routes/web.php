@@ -23,6 +23,9 @@ Route::get('/select', function () {
     return view('select');
 });
 
+// 管理者ユーザーがログインしたら、呼ばれる(管理画面を表示)
+Route::get('/admin', 'HomeController@show_admin_screen');
+
 //サブスクリプションプランの選択がされたら呼ばれる
 Route::post('/select', 'SubscriptionController@select');
 

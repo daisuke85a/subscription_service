@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;    
 
 class LoginController extends Controller
 {
@@ -25,7 +26,18 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+
+    // ログインするユーザーによってリダイレクト先を変える
+    // IDが1の場合、管理者と判断する
+    protected function redirectTo()
+    {
+        $user = Auth::user();
+        if ($user->id === 1) {
+            return '/admin';
+        } else {
+            return '/home';
+        }
+    }
 
     /**
      * Create a new controller instance.
