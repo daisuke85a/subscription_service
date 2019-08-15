@@ -23,8 +23,13 @@ Route::get('/select', function () {
     return view('select');
 });
 
-// 管理者ユーザーがログインしたら、呼ばれる(管理画面を表示)
-Route::get('/admin', 'HomeController@show_admin_screen');
+use App\User;
+
+// TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
+Route::get('/admin', function () {
+    $users = User::all();
+    return view('admin')->with('users', $users);
+});
 
 //サブスクリプションプランの選択がされたら呼ばれる
 Route::post('/select', 'SubscriptionController@select');
