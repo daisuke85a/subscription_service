@@ -62,10 +62,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        // 登録ユーザー数を取得
+        $users = User::all()->count();
+
+        // 登録ユーザーが、0人の場合、つまり1人目の登録者の場合
+        // 管理者として、role に 1 を入れる
+        if ($users === 0) {
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'role' => 1,
+            ]);
+        } else {
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        }
+        
     }
 }
