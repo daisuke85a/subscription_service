@@ -40,7 +40,7 @@ class SubscriptionController extends Controller
             // ログイン中の場合は無視する
             // TODO: 退会後の再入会の時を考慮すると、ここで課金開始するのもありかも。
             Log::info('ログイン中にサブスクリプションプランを選択したため無視する selectPlan="' . print_r($request->plan, true) . '"');                    
-            return view('normal');
+            return redirect('/normal');
         }
     }
 
@@ -57,7 +57,7 @@ class SubscriptionController extends Controller
         // 未ログインの場合は課金開始しない
         if (Auth::check() === false) {
             Log::error('未ログインだから課金しない');                    
-            return view('normal');
+            return redirect('/normal');
         }
 
         // ログイン中のユーザーを取得する
@@ -82,7 +82,7 @@ class SubscriptionController extends Controller
         else{
             // Cokkieの値が無効値だった場合はサブスクリプションを開始しない
             Log::error('Cokkieの値が無効値だった場合はサブスクリプションを開始しない selectPlanCookie="' . print_r($selectPlanCookie, true) . '"');                    
-            return view('normal');
+            return redirect('/normal');
         }
 
         try{
@@ -91,7 +91,7 @@ class SubscriptionController extends Controller
         }catch(Exception $e){
             //TODO: ユーザーにエラーメッセージを表示したい
             Log::error('Stripeにサブスクリプションプランの登録を失敗しました');                    
-            return view('normal');
+            return redirect('/normal');
         }
         
         // ユーザー情報を更新する
@@ -102,7 +102,7 @@ class SubscriptionController extends Controller
         Log::info('サブスクリプション課金を開始する user_id="' . print_r($user->id, true) . '" 課金プラン="' . print_r($user->plan, true) . '" ');                    
 
         //TODO: HomeControllerができたらルートパスへのリダイレクトにする
-        return view('normal');
+        return redirect('/normal');
     }
 
     /**
@@ -118,7 +118,7 @@ class SubscriptionController extends Controller
         // 未ログインの場合は処理しない
         if (Auth::check() === false) {
             Log::error('未ログインだから課金停止しない');                    
-            return view('normal');
+            return redirect('/normal');
         }
 
         // ログイン中のユーザーを取得する
@@ -126,10 +126,10 @@ class SubscriptionController extends Controller
         
         // サブスクリプションのプランが想定外の場合はエラーとして終了する
         if( ($user->plan !== 1000) &&
-            ($user->plan !== 2000) &&
-            ($user->plan !== 3000)  ){
+            ($user->plan !== 3000) &&
+            ($user->plan !== 5000)  ){
             Log::error('DBに記録されているサブスクプリションのプランが想定外です user_id="' . print_r($user->id, true) . '" 課金プラン="' . print_r($user->plan, true) . '" ');
-            return view('normal');
+            return redirect('/normal');
         }
 
         try{
@@ -138,14 +138,14 @@ class SubscriptionController extends Controller
         }catch(Exception $e){
             //TODO: ユーザーにエラーメッセージを表示したい
             Log::error('Stripeにサブスクリプションプランの退会に失敗しました');                    
-            return view('normal');
+            return redirect('/normal');
         }
 
         $user->status = false;
         $user->update();
         
         //TODO: HomeControllerができたらルートパスへのリダイレクトにする
-        return view('normal');
+        return redirect('/normal');
 
     }
 
