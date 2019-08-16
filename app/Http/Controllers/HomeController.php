@@ -31,19 +31,13 @@ class HomeController extends Controller
         $user = Auth::user();
 
         if ($user) {
-            $card = $user->card_brand;
 
             if ($user->role === 1) {
                 $users = User::all();
 
                 return view('admin')->with('users', $users);
             } else {
-
-                if (!$card) {
-                    return view('credit');
-                } else {
-                    return view('normal');
-              }
+                return view('normal');
             }
         } else {
             return view('select');

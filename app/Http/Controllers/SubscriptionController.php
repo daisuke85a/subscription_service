@@ -7,6 +7,7 @@ use App\User;
 use Auth;
 use Log;
 use Cookie;
+use Illuminate\Validation\Rule;
 
 class SubscriptionController extends Controller
 {
@@ -28,19 +29,25 @@ class SubscriptionController extends Controller
      */
     public function select(Request $request){
 
-        // TODO: バリデーションを実装する
+        $validatedData = $request->validate([
+            'plan' => [
+                'required',
+                Rule::in([1000, 3000, 5000]),
+            ],            
+        ]);
+
+        Cookie::queue(Cookie::make('selectPlan', $request->plan, 10000));
 
         // 未ログインの場合は一旦Cookieに保存する
         if (Auth::check() === false) {
-            Cookie::queue(Cookie::make('selectPlan', $request->plan, 10000));
-            Log::info('未ログインでサブスクリプションプランを選択したため一旦Cokkieに保存する selectPlan="' . print_r($request->plan, true) . '"');
+            Log::info('未ログインでサブスクリプションプランを選択した。一旦Cokkieに保存する selectPlan="' . print_r($request->plan, true) . '"');
             return redirect('/register');
         }
         else{
             // ログイン中の場合は無視する
             // TODO: 退会後の再入会の時を考慮すると、ここで課金開始するのもありかも。
-            Log::info('ログイン中にサブスクリプションプランを選択したため無視する selectPlan="' . print_r($request->plan, true) . '"');
-            return redirect('/');
+            Log::info('ログイン中にサブスクリプションプランを選択した。 selectPlan="' . print_r($request->plan, true) . '"');
+            return redirect('/credit');
         }
     }
 
