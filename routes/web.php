@@ -8,6 +8,4 @@ Route::post('/select', 'SubscriptionController@select');
 Route::post('/stripe', 'SubscriptionController@create');
 Route::post('/unsubscribe', 'SubscriptionController@unsubscribe');
 
-Route::get('/credit', function () {
-    return view('credit');
-});
+Route::get('/credit', 'SubscriptionController@inputCredit');

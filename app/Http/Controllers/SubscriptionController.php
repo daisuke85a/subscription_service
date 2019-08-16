@@ -8,6 +8,7 @@ use Auth;
 use Log;
 use Cookie;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\MessageBag;
 
 class SubscriptionController extends Controller
 {
@@ -49,6 +50,28 @@ class SubscriptionController extends Controller
             Log::info('ログイン中にサブスクリプションプランを選択した。 selectPlan="' . print_r($request->plan, true) . '"');
             return redirect('/credit');
         }
+    }
+
+    /**
+     * クレジットカードの入力を行う
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function inputCredit(Request $request){
+
+        // 未ログインの場合はクレジットカード入力を許可しない
+        if (Auth::check() === false) {
+            Log::warning('未ログインの場合はクレジットカード入力禁止とする');
+
+            $messages = new MessageBag;
+            $messages->add('', '未ログインのためクレジットカード入力はできません');
+
+            return redirect('/')->withErrors($messages);
+        }
+
+        return view('credit');
+
     }
 
     /**
