@@ -41,6 +41,9 @@
         padding: 0px 50px;
     }
 </style>
+@endsection
+
+@section('custom_js_head')
 <script src="https://js.stripe.com/v3/"></script>
 @endsection
 
