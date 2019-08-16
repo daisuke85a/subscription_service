@@ -87,6 +87,17 @@ class SubscriptionController extends Controller
             
         }
 
+        // 課金中ユーザーの場合
+        if(Auth::user()->status === 1){
+            Log::warning('課金ユーザーはクレジットカード情報入力画面を開けない');
+
+            $messages = new MessageBag;
+            $messages->add('', '課金中ユーザーはクレジットカード入力はできません。');
+
+            return redirect('/')->withErrors($messages);
+
+        }
+
         return view('credit' , ['selectPlan' => $selectPlanCookie]);
 
     }
@@ -103,7 +114,7 @@ class SubscriptionController extends Controller
 
         // 未ログインの場合は課金開始しない
         if (Auth::check() === false) {
-            Log::error('未ログインだから課金しない');
+            Log::warning('未ログインだから課金しない');
             return redirect('/');
         }
 
