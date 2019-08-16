@@ -7,6 +7,7 @@ use App\User;
 use Auth;
 use Log;
 use Cookie;
+use Illuminate\Validation\Rule;
 
 class SubscriptionController extends Controller
 {
@@ -28,7 +29,12 @@ class SubscriptionController extends Controller
      */
     public function select(Request $request){
 
-        // TODO: バリデーションを実装する
+        $validatedData = $request->validate([
+            'plan' => [
+                'required',
+                Rule::in([1000, 3000, 5000]),
+            ],            
+        ]);
 
         // 未ログインの場合は一旦Cookieに保存する
         if (Auth::check() === false) {
