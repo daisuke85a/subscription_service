@@ -23,7 +23,7 @@
                         @foreach ($users as $user)
                             <tr>
                             <th scope="row">{{ $user->id }}</th>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
                             <td>{{ $user->plan }}</td>
                             <td>{{ $user->status_text }}</td>
                             <td>{{ $user->created_due_date }}</td>

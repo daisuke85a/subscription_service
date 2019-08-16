@@ -37,7 +37,14 @@ class HomeController extends Controller
                 return view('normal');
             }
         } else {
-            return view('select');
+
+            $userNum = User::all()->count();
+            if ($userNum === 0) {
+                return view('adminRegister');
+            } else {
+                return view('select');
+            }
+
         }
     }
 
