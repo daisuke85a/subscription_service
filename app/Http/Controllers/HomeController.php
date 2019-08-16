@@ -38,12 +38,7 @@ class HomeController extends Controller
 
                 return view('admin')->with('users', $users);
             } else {
-
-                if (!$card) {
-                    return view('credit');
-                } else {
-                    return view('normal');
-              }
+                return view('normal');
             }
         } else {
             return view('select');
