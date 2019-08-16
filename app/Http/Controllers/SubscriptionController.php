@@ -70,7 +70,26 @@ class SubscriptionController extends Controller
             return redirect('/')->withErrors($messages);
         }
 
-        return view('credit');
+        // 有効なプランが選択されていない場合は入力を許可しない。
+        // TODO: ログアウトしたらキャッシュをクリアしたい。むしろPlan情報は本当はSessionに入れたい。
+        // TODO: Sessionに入れていない理由は、ログインとともにセッション情報がクリア（IDがリジェネリトされる）される問題を
+        // 解消するのが難しいから。
+        $selectPlanCookie = (int)(Cookie::get('selectPlan'));
+        
+        if( ($selectPlanCookie !== 1000) ||
+            ($selectPlanCookie !== 3000) ||
+            ($selectPlanCookie !== 5000)
+        ){
+            Log::warning('課金プランが未選択です');
+
+            $messages = new MessageBag;
+            $messages->add('', '課金プランが未選択です');
+
+            return redirect('/')->withErrors($messages);
+            
+        }
+
+        return view('credit' , ['selectPlan' => $selectPlan]);
 
     }
 
