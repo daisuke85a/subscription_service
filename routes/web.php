@@ -11,17 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    // TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
-    // SubscriptionPlanの実装確認のため仮実装する
-    return view('select');
-});
+// Route::get('/', function () {
+//     // TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
+//     // SubscriptionPlanの実装確認のため仮実装する
+//     return view('select');
+// });
+//TODO(だん)：ルートパースをコントローラーを通してから判断したいので書き換えました
+Route::get('/', 'HomeController@all');
 
 // TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
 // SubscriptionPlanの実装確認のため仮実装する
-Route::get('/select', function () {
-    return view('select');
-});
+// Route::get('/select', function () {
+//     return view('select');
+// });
 
 // 管理者ユーザーがログインしたら、呼ばれる(管理画面を表示)
 Route::get('/admin', 'HomeController@show_admin_screen');

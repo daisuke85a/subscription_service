@@ -15,7 +15,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+
+          if ($_SERVER["REQUEST_URI"] !== '/') {
+              $this->middleware('auth');
+          }
     }
 
     /**
@@ -44,6 +47,27 @@ class HomeController extends Controller
             return view('admin')->with('users', $users);
         } else {
             return redirect('/');
+        }
+    }
+    
+    //TODO(だん)：ルートパースの判断
+    public function all()
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            // 実際にカードを入力時にcard_brandカラムの値が入るので、
+            //card_brandカラムの値有無でカードを登録しているかどうかを判断
+            $card = $user->card_brand;
+
+            if (!$card) {
+              return view('credit');
+            } else {
+              // 一般ユーザーの時nomalページがないので、homeにしました
+              return view('home');
+            }
+        } else {
+            return view('select');
         }
     }
 
