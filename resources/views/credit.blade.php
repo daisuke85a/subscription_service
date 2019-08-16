@@ -48,10 +48,13 @@
 @endsection
 
 @section('content')
+
+
+
 <form action="/stripe" method="post" id="payment-form" class="padding50px50px">
     <div class="form-row">
         <label for="card-element">
-            クレジットカード情報を入力してください
+            {{$selectPlan}}の課金をするため、クレジットカード情報を入力してください
         </label>
         <div id="card-element">
             <!-- A Stripe Element will be inserted here. -->
