@@ -25,9 +25,9 @@
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->plan }}</td>
-                            <td>{{ $user->status }}</td>
-                            <td>{{ $user->created_at }}</td>
-                            <td>{{ $user->updated_at }}</td>
+                            <td>{{ $user->status_text }}</td>
+                            <td>{{ $user->created_due_date }}</td>
+                            <td>{{ $user->updated_due_date }}</td>
                             </tr>
                         @endforeach
                         </tbody>

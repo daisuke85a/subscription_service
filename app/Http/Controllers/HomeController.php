@@ -28,6 +28,7 @@ class HomeController extends Controller
         return view('home');
     }
 
+    // TODO: HomeControllerを実装したら削除
     /**
      * Show the admin screen.
      *
@@ -39,7 +40,7 @@ class HomeController extends Controller
         $user = Auth::user();
 
         // 管理者の場合のみ、管理画面に遷移できる
-        if ($user->id === 1) {
+        if ($user->role === 1) {
             $users = User::all();
             return view('admin')->with('users', $users);
         } else {

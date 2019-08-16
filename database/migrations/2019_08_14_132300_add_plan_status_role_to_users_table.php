@@ -14,9 +14,9 @@ class AddPlanStatusRoleToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('plan')->nullable();
-            $table->boolean('status')->nullable();
-            $table->integer('role')->nullable();
+            $table->integer('plan')->default(0);
+            $table->boolean('status')->default(0);
+            $table->integer('role')->default(0);
         });
     }
 
