@@ -19,7 +19,6 @@ class SubscriptionController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
     }
 
     /**
@@ -41,12 +40,11 @@ class SubscriptionController extends Controller
 
         // 未ログインの場合は一旦Cookieに保存する
         if (Auth::check() === false) {
-            Log::info('未ログインでサブスクリプションプランを選択した。一旦Cokkieに保存する selectPlan="' . print_r($request->plan, true) . '"');
+            Log::info('未ログインでサブスクリプションプランを選択した。一旦Cookieに保存する selectPlan="' . print_r($request->plan, true) . '"');
             return redirect('/register');
         }
         else{
-            // ログイン中の場合は無視する
-            // TODO: 退会後の再入会の時を考慮すると、ここで課金開始するのもありかも。
+            // ログイン中の場合はクレジットカード入力画面へ遷移する
             Log::info('ログイン中にサブスクリプションプランを選択した。 selectPlan="' . print_r($request->plan, true) . '"');
             return redirect('/credit');
         }
@@ -62,7 +60,7 @@ class SubscriptionController extends Controller
 
         // 未ログインの場合はクレジットカード入力を許可しない
         if (Auth::check() === false) {
-            Log::warning('未ログインの場合はクレジットカード入力禁止とする');
+            Log::warning('未ログインのためクレジットカード入力画面を開かない。');
 
             $messages = new MessageBag;
             $messages->add('', '未ログインのためクレジットカード入力はできません');
@@ -70,7 +68,26 @@ class SubscriptionController extends Controller
             return redirect('/')->withErrors($messages);
         }
 
-        return view('credit');
+        // 有効なプランが選択されていない場合は入力を許可しない。
+        // TODO: ログアウトしたらキャッシュをクリアしたい。むしろPlan情報は本当はSessionに入れたい。
+        // TODO: Sessionに入れていない理由は、ログインとともにセッション情報がクリア（IDがリジェネリトされる）される問題を
+        // 解消するのが難しいから。
+        $selectPlanCookie = (int)(Cookie::get('selectPlan'));
+        
+        if( ($selectPlanCookie !== 1000) &&
+            ($selectPlanCookie !== 3000) &&
+            ($selectPlanCookie !== 5000)
+        ){
+            Log::warning('課金プランが未選択のためクレジットカード入力はできません');
+
+            $messages = new MessageBag;
+            $messages->add('', '課金プランが未選択です');
+
+            return redirect('/')->withErrors($messages);
+            
+        }
+
+        return view('credit' , ['selectPlan' => $selectPlanCookie]);
 
     }
 
@@ -131,7 +148,6 @@ class SubscriptionController extends Controller
 
         Log::info('サブスクリプション課金を開始する user_id="' . print_r($user->id, true) . '" 課金プラン="' . print_r($user->plan, true) . '" ');
 
-        //TODO: HomeControllerができたらルートパスへのリダイレクトにする
         return redirect('/');
     }
 
@@ -174,7 +190,6 @@ class SubscriptionController extends Controller
         $user->status = false;
         $user->update();
 
-        //TODO: HomeControllerができたらルートパスへのリダイレクトにする
         return redirect('/');
 
     }
