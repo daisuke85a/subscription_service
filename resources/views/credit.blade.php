@@ -43,7 +43,6 @@
 </style>
 <script src="https://js.stripe.com/v3/"></script>
 @endsection
-</head>
 
 @section('content')
 <form action="/stripe" method="post" id="payment-form" class="padding50px50px">
@@ -69,7 +68,9 @@
     CVC：任意の数字3桁(例：111)<br />
     郵便番号：任意の数字5桁(例：11111)<br />
 </p>
+@endsection
 
+@section('custom_js_body')
 <script>
     // Create a Stripe client.
     var stripe = Stripe('pk_test_NpcwKEh4fw8kbkUT6Eziz2eT001DPnbyOC');
