@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <title>クレジットカード入力画面</title>
     <style>
         /**
 * The CSS shown here will not be introduced in the Quickstart guide, but shows
@@ -38,6 +41,14 @@
         .StripeElement--webkit-autofill {
             background-color: #fefde5 !important;
         }
+
+        .padding50px50px {
+            padding: 50px 50px;
+        }
+
+        .padding0px50px {
+            padding: 0px 50px;
+        }
     </style>
 </head>
 
@@ -45,10 +56,10 @@
 
     <script src="https://js.stripe.com/v3/"></script>
 
-    <form action="/stripe" method="post" id="payment-form">
+    <form action="/stripe" method="post" id="payment-form" class="padding50px50px">
         <div class="form-row">
             <label for="card-element">
-                Credit or debit card
+                クレジットカード情報を入力してください
             </label>
             <div id="card-element">
                 <!-- A Stripe Element will be inserted here. -->
@@ -58,8 +69,16 @@
             <div id="card-errors" role="alert"></div>
         </div>
 
-        <button>Submit Payment</button>
+        <button class="btn btn-primary">支払う</button>
     </form>
+
+    <p class="padding0px50px">
+        テスト中のため、以下を入力するとクレジットカードの承認が可能です。<br />
+        番号：4242 4242 4242 4242<br />
+        月/年：現在より後の月/年(例：12/25)<br />
+        CVC：任意の数字3桁(例：111)<br />
+        郵便番号：任意の数字5桁(例：11111)<br />
+    </p>
 
     <script>
         // Create a Stripe client.
