@@ -15,9 +15,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        if ($_SERVER["REQUEST_URI"] !== '/') {
-            $this->middleware('auth');
-        }
     }
 
     /**

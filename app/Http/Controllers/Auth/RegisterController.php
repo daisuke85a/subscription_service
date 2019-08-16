@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Cookie;
+use Log;
+use Illuminate\Support\MessageBag;
 
 class RegisterController extends Controller
 {
@@ -93,5 +96,29 @@ class RegisterController extends Controller
             ]);
         }
         
+    }
+
+    /**
+     * ユーザー登録画面の表示
+     *
+     * @return void
+     */
+    public function showRegistrationForm(){
+        
+        $selectPlanCookie = (int)(Cookie::get('selectPlan'));
+        
+        if( ($selectPlanCookie !== 1000) &&
+            ($selectPlanCookie !== 3000) &&
+            ($selectPlanCookie !== 5000)
+        ){
+            Log::warning('課金プランが未選択のためユーザー登録画面は表示できません');
+
+            $messages = new MessageBag;
+            $messages->add('', '課金プランが未選択のためユーザー登録画面は表示できません');
+
+            return redirect('/')->withErrors($messages);
+        }
+
+        return view('auth.register');
     }
 }
