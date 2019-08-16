@@ -26,18 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-
-    // ログインするユーザーによってリダイレクト先を変える
-    // IDが1の場合、管理者と判断する
-    protected function redirectTo()
-    {
-        $user = Auth::user();
-        if ($user->id === 1) {
-            return '/admin';
-        } else {
-            return '/home';
-        }
-    }
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
