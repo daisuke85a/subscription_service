@@ -11,7 +11,6 @@
 |
 */
 
-<<<<<<< HEAD
 // Route::get('/', function () {
 //     // TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
 //     // SubscriptionPlanの実装確認のため仮実装する
@@ -25,19 +24,19 @@ Route::get('/', 'HomeController@all');
 // Route::get('/select', function () {
 //     return view('select');
 // });
-=======
+
 // TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
 // SubscriptionPlanの実装確認のため仮実装する
-Route::get('/', function () {
-    return view('select');
-});
+// Route::get('/', function () {
+//     return view('select');
+// });
 
 // TODO: 本来は'/'にアクセスして、HomeController@indexにて表示画面を判定する
 // SubscriptionPlanの実装確認のため仮実装する
 Route::get('/normal', function () {
     return view('normal');
 });
->>>>>>> 154f994f514f21238aaa216f43b223548e1e776b
+
 
 // 管理者ユーザーがログインしたら、呼ばれる(管理画面を表示)
 Route::get('/admin', 'HomeController@show_admin_screen');
