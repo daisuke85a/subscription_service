@@ -31,7 +31,6 @@ class HomeController extends Controller
         $user = Auth::user();
 
         if ($user) {
-            $card = $user->card_brand;
 
             if ($user->role === 1) {
                 $users = User::all();
