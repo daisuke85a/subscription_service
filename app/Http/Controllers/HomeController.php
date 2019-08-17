@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,7 +15,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -21,8 +22,30 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function all()
     {
-        return view('home');
+        $user = Auth::user();
+
+        if ($user) {
+
+            if ($user->role === 1) {
+                $users = User::all();
+
+                return view('admin')->with('users', $users);
+            } else {
+                return view('normal');
+            }
+        } else {
+
+            $userNum = User::all()->count();
+            if ($userNum === 0) {
+                return view('adminRegister');
+            } else {
+                return view('select');
+            }
+
+        }
     }
+
 }

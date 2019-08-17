@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Cookie;
+use Log;
+use Illuminate\Support\MessageBag;
 
 class RegisterController extends Controller
 {
@@ -27,7 +31,17 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function redirectTo() 
+    {
+        $user = Auth::user();
+
+        // roleによって、リダイレクト先を変える
+        if ($user->role === 1) {
+            return '/';
+        } else {
+            return '/credit';
+        }
+    }
 
     /**
      * Create a new controller instance.
@@ -62,10 +76,49 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        // 登録ユーザー数を取得
+        $users = User::all()->count();
+
+        // 登録ユーザーが、0人の場合、つまり1人目の登録者の場合
+        // 管理者として、role に 1 を入れる
+        if ($users === 0) {
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'role' => 1,
+            ]);
+        } else {
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        }
+        
+    }
+
+    /**
+     * ユーザー登録画面の表示
+     *
+     * @return void
+     */
+    public function showRegistrationForm(){
+        
+        $selectPlanCookie = (int)(Cookie::get('selectPlan'));
+        
+        if( ($selectPlanCookie !== 1000) &&
+            ($selectPlanCookie !== 3000) &&
+            ($selectPlanCookie !== 5000)
+        ){
+            Log::warning('課金プランが未選択のためユーザー登録画面は表示できません');
+
+            $messages = new MessageBag;
+            $messages->add('', '課金プランが未選択のためユーザー登録画面は表示できません');
+
+            return redirect('/')->withErrors($messages);
+        }
+
+        return view('auth.register');
     }
 }
