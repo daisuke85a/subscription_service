@@ -33,14 +33,15 @@ class SubscriptionController extends Controller
             'plan' => [
                 'required',
                 Rule::in([1000, 3000, 5000]),
-            ],            
+            ],
         ]);
 
-        Cookie::queue(Cookie::make('selectPlan', $request->plan, 10000));
+
 
         // 未ログインの場合は一旦Cookieに保存する
         if (Auth::check() === false) {
             Log::info('未ログインでサブスクリプションプランを選択した。一旦Cookieに保存する selectPlan="' . print_r($request->plan, true) . '"');
+            Cookie::queue(Cookie::make('selectPlan', $request->plan, 10000));
             return redirect('/register');
         }
         else{
@@ -73,7 +74,7 @@ class SubscriptionController extends Controller
         // TODO: Sessionに入れていない理由は、ログインとともにセッション情報がクリア（IDがリジェネリトされる）される問題を
         // 解消するのが難しいから。
         $selectPlanCookie = (int)(Cookie::get('selectPlan'));
-        
+
         if( ($selectPlanCookie !== 1000) &&
             ($selectPlanCookie !== 3000) &&
             ($selectPlanCookie !== 5000)
@@ -84,7 +85,7 @@ class SubscriptionController extends Controller
             $messages->add('', '課金プランが未選択です');
 
             return redirect('/')->withErrors($messages);
-            
+
         }
 
         // 課金中ユーザーの場合
