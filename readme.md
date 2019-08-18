@@ -27,6 +27,14 @@
 ## 期間
 * 2019/08/13 PM 10:00 〜 2019/08/19 AM 09:00
 
+## 開発環境の構築手順
+* $ git clone https://github.com/daisuke85a/subscription_service.git subscription_service  
+* $ create database subscription_service CHARACTER SET utf8mb4;  
+* .envファイルを以下に書き換える
+  * DB_DATABASE=subscription_service
+  * STRIPE_KEY=Stripeで発行するキーコード
+  * STRIPE_SECRET=Stripeで発行するシークレットキー
+
 ## チームメンバーと役割
 * だいすけ <a href="https://github.com/daisuke85a">GitHub</a> <a href="https://twitter.com/daisuke7924">Twitter</a> 
   * マネジメント
@@ -37,7 +45,7 @@
     * アーキテクチャー選定
     * 全体の画面遷移図作成
       * パスと対応する画面を定義
-    * View,Controller,Modelの責務分掌策定
+    * View,Controller,Modelの責務分掌や大まかな設計の策定
     * Pull Requestの承認
   * 担当機能
     * 自動請求機能（stripeのテスト環境を利用）
@@ -85,7 +93,6 @@
 * 自分専用のブランチにpushすること。
 * Developに取り入れたくなったら、GitHub上でPullRequestの操作をする
   * 競合していた場合は解消してからPullRequestしてほしい。（解消が難しい場合は要相談）
-
 
 # 以下はLaravelの情報
 
