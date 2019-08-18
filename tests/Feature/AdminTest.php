@@ -24,27 +24,32 @@ class AdminTest extends TestCase
 
     }
 
-    public function testログイン後、管理者なら管理画面へ遷移(){
+    public function testテスト用DB、未ログインで管理者であれば管理者登録画面へリダイレクトする() {
 
-        // id=1 に登録されているユーザーを取り出す
-        $user = User::where('id', 1)->first();
-
+        // ユーザーを１つ作成
+        // ここで作成するユーザーにはデフォルトでroleを 1 にしている
+        $user = factory(User::class)->create([
+            'password'  => bcrypt('test1111')
+        ]);
+ 
+        // まだ、認証されていない
+        $this->assertFalse(Auth::check());
+ 
         // ログインを実行
-        $response = $this->post('/login', [
-            'email'    => $user['email'],
-            // パスワードを入れる(これは僕の場合)
-            'password' => '11111111'
+        $response = $this->post('login', [
+            'email'    => $user->email,
+            'password' => 'test1111'
         ]);
  
         // 認証されている
         $this->assertTrue(Auth::check());
-
-        // リダイレクト先が '/'
+ 
         $response->assertRedirect('/');
-        
-        // ログイン後に管理画面にリダイレクトされるのを確認
+
+        // 管理画面への遷移を確認
         $this->get('/')
              ->assertSee('管理画面');
+
     }
 
 }
