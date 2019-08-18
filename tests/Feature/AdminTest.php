@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class AdminTest extends TestCase
 {
 
+    public function setUp() {
+        parent::setUp();
+        \Illuminate\Support\Facades\Artisan::call('migrate:refresh');
+    }
+
     public function test未ログインで最初の登録者であれば管理者登録画面へリダイレクトする(){
 
         $user = User::where('id', 1)->count();
