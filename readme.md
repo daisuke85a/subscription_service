@@ -67,6 +67,14 @@
 8. $ php artisan migrate
 9. $ php artisan serve
 
+(追記)
+テストを行う場合、.env.testingファイルの以下をお使いの環境に合わせて書き換える。
+DB_HOST=127.0.0.1
+DB_PORT=8889 
+DB_DATABASE=subscription_service_testing
+DB_USERNAME=root
+DB_PASSWORD=root
+
 ## チームメンバーと役割
 * だいすけ <a href="https://github.com/daisuke85a">GitHub</a> <a href="https://twitter.com/daisuke7924">Twitter</a> 
   * 要件定義の補完
