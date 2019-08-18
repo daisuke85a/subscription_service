@@ -22,27 +22,27 @@
 ## チームで追加した詳細仕様 
 提示された要件に足りない仕様をチームで補完した。  
 ### 通常フロー
-* 管理ユーザー登録済みの場合は、月額1000円, 3000円, 5000円の3つのプランを表示する
-* ユーザーがプランを選択すると、ユーザ登録画面を表示する
-* ユーザーがユーザ登録すると、クレジットカード番号入力画面を表示する
-* ユーザーがクレジットカード番号を入力すると、Stripeに課金登録される
-* Stripeに課金登録が完了すると、登楼した課金プラン、退会ボタンを表示する。
+1. 管理ユーザー登録済みの場合は、月額1000円, 3000円, 5000円の3つのプランを表示する
+2. ユーザーがプランを選択すると、ユーザ登録画面を表示する
+3. ユーザーがユーザ登録すると、クレジットカード番号入力画面を表示する
+4. ユーザーがクレジットカード番号を入力すると、Stripeに課金登録される
+5. Stripeに課金登録が完了すると、登楼した課金プラン、退会ボタンを表示する。
 
 ### 退会フロー
-* 課金登録済みのユーザーがログインする
-* システムが課金プラン、退会ボタンを表示する。
-* ユーザーが退会ボタンを押すと、Stripeに課金停止を請求する
-* Stripeへの課金停止処理が完了すると、退会済み画面を表示する
-* 退会済みの状態表示と、再入会用に月額1000円, 3000円, 5000円の3つのプランを表示する
+1. 課金登録済みのユーザーがログインする
+2. システムが課金プラン、退会ボタンを表示する。
+3. ユーザーが退会ボタンを押すと、Stripeに課金停止を請求する
+4. Stripeへの課金停止処理が完了すると、退会済み画面を表示する
+5. 退会済みの状態表示と、再入会用に月額1000円, 3000円, 5000円の3つのプランを表示する
 
 ### 再入会フロー
-* 課金未登録ユーザーがログインする
-* 退会済みの状態表示と、再入会用に月額1000円, 3000円, 5000円の3つのプランを表示する
-* プラン選択後のフローは通常フローと同様
+1. 課金未登録ユーザーがログインする
+2. 退会済みの状態表示と、再入会用に月額1000円, 3000円, 5000円の3つのプランを表示する
+3. プラン選択後のフローは通常フローと同様
 
 ### 管理ユーザーのフロー
-* 管理ユーザー未登録の場合は、管理ユーザー登録画面を表示する
-* 管理ユーザはユーザー管理画面のみ開けることとする
+1. 管理ユーザー未登録の場合は、管理ユーザー登録画面を表示する
+2. 管理ユーザはユーザー管理画面のみ開けることとする
  
 
 ## 検証環境  
@@ -54,18 +54,18 @@
 * 2019/08/13 PM 10:00 〜 2019/08/19 AM 09:00
 
 ## 開発環境の構築手順
-* $ git clone https://github.com/daisuke85a/subscription_service.git subscription_service  
-* $ cd ./subscription_service
-* $ composer install
-* $ cp .env.example .env
-* $ php artisan key:generate
-* .envファイルを以下に書き換える
-  * DB_DATABASE=subscription_service
-  * STRIPE_KEY=Stripeで発行するキーコード
-  * STRIPE_SECRET=Stripeで発行するシークレットキー
-* mysql > create database subscription_service CHARACTER SET utf8mb4;  
-* $ php artisan migrate
-* $ php artisan serve
+1. $ git clone https://github.com/daisuke85a/subscription_service.git subscription_service  
+2. $ cd ./subscription_service
+3. $ composer install
+4. $ cp .env.example .env
+5. $ php artisan key:generate
+6. .envファイルを以下に書き換える  
+   1. DB_DATABASE=subscription_service
+   2. STRIPE_KEY=Stripeで発行するキーコード
+   3. STRIPE_SECRET=Stripeで発行するシークレットキー
+7. mysql > create database subscription_service CHARACTER SET utf8mb4;  
+8. $ php artisan migrate
+9. $ php artisan serve
 
 ## チームメンバーと役割
 * だいすけ <a href="https://github.com/daisuke85a">GitHub</a> <a href="https://twitter.com/daisuke7924">Twitter</a> 
