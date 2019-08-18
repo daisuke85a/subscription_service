@@ -1,3 +1,94 @@
+# プロジェクトについて
+## 概要
+3人チームで架空の有料webサービス制作した    
+<a href="https://note.mu/muchoco/n/n8adced84de9c">むちょこ道場</a>のチーム開発課題  
+
+## 要件 
+* 月額1000円, 3000円, 5000円の3つのプラン
+* 自動請求機能（stripeのテスト環境を利用）
+* アカウント認証機能（プランの管理を含む）
+  * ユーザ登録（メールアドレス、パスワード）
+  * ログイン、ログアウト
+  * 退会
+  * ログイン後、本人の契約中プランを表示
+  * その他、パスワードリセット機能等はあってもなくてもOK
+* ユーザ一覧が閲覧できる管理画面
+  * 管理ユーザーのみが表示できる
+  * 表示するのは、ID,メールアドレス、プラン、ステータス（有効/無効）、作成日時、更新日時
+* 好きなフレームワークを使ってOK
+* なるべくテストを書いてください（推奨）
+* 詳細は<a href="https://docs.google.com/presentation/d/14292HhO-bvdtNf2idg2phZQiuSs33NTPLl2LZ-3cyzM/edit#slide=id.p">こちら</a>
+
+## 検証環境  
+* PHP7.3.1
+* MySQL8.0.14
+* Google Chrome最新バージョン
+
+## 期間
+* 2019/08/13 PM 10:00 〜 2019/08/19 AM 09:00
+
+## チームメンバーと役割
+* だいすけ <a href="https://github.com/daisuke85a">GitHub</a> <a href="https://twitter.com/daisuke7924">Twitter</a> 
+  * マネジメント
+    * チームのGitリポジトリの管理
+    * 全体の進捗を把握し、期限に間に合うように調整する
+    * プロジェクトのGit Flowの定義
+  * 技術リード
+    * アーキテクチャー選定
+    * 全体の画面遷移図作成
+      * パスと対応する画面を定義
+    * View,Controller,Modelの責務分掌策定
+    * Pull Requestの承認
+  * 担当機能
+    * 自動請求機能（stripeのテスト環境を利用）
+    * アカウント認証機能
+      * 退会
+      * ログイン後、本人の契約中プランを表示
+      * 再入会（追加した仕様）
+* Danri <a href="https://github.com/Danri0817">GitHub</a> <a href="https://twitter.com/Danri_">Twitter</a> 
+  * 担当機能
+    * ルートパスにアクセスした時状態に応じて画面遷移する
+* るー <a href="https://github.com/prostarting">GitHub</a> <a href="https://twitter.com/ru_programing">Twitter</a>
+  * 担当機能
+    * アカウント認証機能
+      * ログイン、ログアウト
+    * 管理画面
+      * 一般ユーザー、管理ユーザーの管理
+      * 管理画面表示表示
+  
+## アーキテクチャー
+* Laravel ver5.5を採用
+  * 理由：当初はLaravel ver5.8での開発を試みたがスキル不足で諦めた  
+  * 対応するLaravel Cashierのバージョンの仕様が調べづらく、キャッチアップできなかった。
+
+
+## スケジュール
+* GitHubのリポジトリを作る（だいすけ）
+  * 〜8/13
+* 役割分担を決める
+  * 8/14 21:00〜22:00 ZOOMで話す
+* それぞれが実装する
+  * 8/14 22:00〜8/16 21:00　２日
+* それぞれの実装をマージする
+  * 8/16 21:00〜8/17 21:00　１日
+* 17日（土）のクラウド会議で、チームメイトが書いたコードを解説（できたらレビューも）する。
+  * 他人が書いたコードを読む力
+  * 他人が読みやすいコードを書く力  
+* 動作確認し動かない部分を直す 8/17 21:00〜 8/18 21:00　１日
+* 余裕があったらテストコードを書く。
+* 提出 8/18 21:00にだす
+  * 期限は8/19 09:00だがバッファをとる
+
+## Gitのルール
+* GitHub上のMaster/Developへのpushは禁止
+* ローカル環境で最新のDevelopからgit branchしてfeature/adminのような自分専用のブランチを作ろう
+* 自分専用のブランチにpushすること。
+* Developに取り入れたくなったら、GitHub上でPullRequestの操作をする
+  * 競合していた場合は解消してからPullRequestしてほしい。（解消が難しい場合は要相談）
+
+
+# 以下はLaravelの情報
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
