@@ -38,8 +38,8 @@ class HomeController extends Controller
             }
         } else {
 
-            $userNum = User::all()->count();
-            if ($userNum === 0) {
+            $first_user = User::where('id', 1)->count();
+            if ($first_user === 0) {
                 return view('adminRegister');
             } else {
                 return view('select');
