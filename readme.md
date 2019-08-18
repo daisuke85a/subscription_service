@@ -68,7 +68,9 @@
 9. $ php artisan serve
 
 (追記)  
-テストを行う場合、.env.testingファイルの以下をお使いの環境に合わせて書き換える。  
+テストを行う場合の手順
+1. mysql > create database subscription_service_testing CHARACTER SET utf8mb4;
+2. .env.testingファイルの以下をお使いの環境に合わせて書き換える。  
 DB_HOST=127.0.0.1  
 DB_PORT=8889  
 DB_DATABASE=subscription_service_testing  
